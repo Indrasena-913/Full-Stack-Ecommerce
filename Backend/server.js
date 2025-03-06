@@ -1,6 +1,8 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
 const userRoutes = require("./routes/users");
 const categoryRoutes = require("./routes/categoryRoutes");
 const productRoutes = require("./routes/ProductsRoutes");
@@ -10,8 +12,6 @@ const wishlistRoutes = require("./routes/wishlistRoutes");
 // const categoryRoutes = require("./routes/categories");
 const pool = require("./models/db");
 const checkoutRoutes = require("./routes/checkoutRoutes");
-
-dotenv.config();
 
 const app = express();
 
