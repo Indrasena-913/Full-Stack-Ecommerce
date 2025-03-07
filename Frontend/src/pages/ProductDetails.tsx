@@ -73,12 +73,12 @@ const ProductDetails = ({ userId }: { userId: number }) => {
 
 	if (loadingProduct) {
 		return (
-			<div className="max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-md flex flex-col items-center justify-center min-h-screen">
-				<Skeleton className="w-full h-96 mb-4" />
-				<Skeleton className="w-1/2 h-8 mb-2" />
-				<Skeleton className="w-1/4 h-6 mb-2" />
+			<div className="w-full max-w-6xl mx-auto p-4 sm:p-6 bg-white rounded-lg shadow-md flex flex-col items-center justify-center min-h-screen">
+				<Skeleton className="w-full h-80 mb-4" />
+				<Skeleton className="w-3/4 h-8 mb-2" />
+				<Skeleton className="w-1/3 h-6 mb-2" />
 				<Skeleton className="w-full h-4 mb-2" />
-				<Skeleton className="w-1/4 h-6 mb-2" />
+				<Skeleton className="w-1/3 h-6 mb-2" />
 				<Skeleton className="w-full h-10" />
 			</div>
 		);
@@ -104,34 +104,38 @@ const ProductDetails = ({ userId }: { userId: number }) => {
 	};
 
 	return (
-		<div className="max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-md flex flex-col items-center justify-center min-h-screen">
-			<div className="flex flex-col md:flex-row gap-10 items-center w-full">
-				<div className="md:w-2/3 flex flex-col items-center">
-					<LazyImage
-						src={mainImage}
-						alt={product.title}
-						className="w-full max-w-[400px] h-96 object-contain rounded-lg shadow-md transition-all duration-300"
-					/>
-					<div className="flex gap-2 mt-4 overflow-x-auto">
+		<div className="w-full max-w-6xl mx-auto p-4 sm:p-6 bg-white rounded-lg shadow-md flex flex-col items-center justify-center min-h-screen">
+			<div className="flex flex-col md:flex-row w-full gap-6 md:gap-10">
+				<div className="w-full md:w-2/3 flex flex-col items-center">
+					<div className="w-full max-w-md">
+						<LazyImage
+							src={mainImage}
+							alt={product.title}
+							className="w-full h-64 sm:h-80 md:h-96 object-contain rounded-lg shadow-md transition-all duration-300"
+						/>
+					</div>
+					<div className="flex gap-2 mt-4 w-full max-w-md overflow-x-auto justify-center pb-2">
 						{product.images?.map((image, index) => (
 							<LazyImage
 								key={index}
 								src={image}
 								alt={`${product.title} ${index + 1}`}
-								className={`w-20 h-20 object-contain rounded-md cursor-pointer border-2 ${
+								className={`w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-md cursor-pointer border-2 ${
 									mainImage === image
 										? "border-indigo-600 scale-110"
 										: "border-gray-300"
-								} transition-transform duration-300`}
+								} transition-transform duration-300 flex-shrink-0`}
 								onClick={() => setMainImage(image)}
 							/>
 						))}
 					</div>
 				</div>
 
-				<div className="md:w-1/3 space-y-4 text-center md:text-left">
-					<h1 className="text-4xl font-bold">{product.title}</h1>
-					<p className="text-gray-600 text-2xl font-semibold">
+				<div className="w-full md:w-1/3 space-y-4 text-center md:text-left">
+					<h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+						{product.title}
+					</h1>
+					<p className="text-gray-600 text-xl sm:text-2xl font-semibold">
 						₹{Number(product.price).toFixed(2)}
 					</p>
 
@@ -149,7 +153,7 @@ const ProductDetails = ({ userId }: { userId: number }) => {
 					<p className="text-gray-600 font-medium">Stock: {product.stock}</p>
 
 					<button
-						className="w-full max-w-[250px] mx-auto md:mx-0 bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-transform transform hover:scale-105"
+						className="w-full max-w-xs mx-auto md:mx-0 bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-transform transform hover:scale-105"
 						onClick={() => {
 							handleAddToCart(product.id);
 						}}
@@ -160,34 +164,35 @@ const ProductDetails = ({ userId }: { userId: number }) => {
 			</div>
 
 			{loadingRelated ? (
-				<div className="mt-10 w-full">
-					<Skeleton className="h-32 mb-4" />
-					<Skeleton className="h-32 mb-4" />
-					<Skeleton className="h-32 mb-4" />
-					<Skeleton className="h-32 mb-4" />
+				<div className="mt-8 sm:mt-10 w-full">
+					<Skeleton className="h-24 sm:h-32 mb-4" />
+					<Skeleton className="h-24 sm:h-32 mb-4" />
+					<Skeleton className="h-24 sm:h-32 mb-4" />
 				</div>
 			) : relatedProducts.length > 0 ? (
-				<div className="mt-10 w-full">
-					<h2 className="text-2xl font-bold text-center mb-4">
+				<div className="mt-8 sm:mt-10 w-full">
+					<h2 className="text-xl sm:text-2xl font-bold text-center mb-4">
 						Related Products
 					</h2>
-					<div className="flex gap-4 overflow-x-auto px-2 md:justify-center">
+					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 w-full">
 						{relatedProducts.map((item) => (
 							<div
 								key={item.id}
-								className="min-w-[150px] md:w-48 bg-gray-100 p-3 rounded-lg shadow-md"
+								className="bg-gray-100 p-2 sm:p-3 rounded-lg shadow-md"
 							>
 								<LazyImage
 									src={item.images[0]}
 									alt={item.title}
-									className="w-full h-32 object-contain rounded-md"
+									className="w-full h-24 sm:h-32 object-contain rounded-md"
 								/>
-								<h3 className="text-sm font-semibold mt-2">{item.title}</h3>
-								<p className="text-gray-600 text-sm">
+								<h3 className="text-xs sm:text-sm font-semibold mt-2 truncate">
+									{item.title}
+								</h3>
+								<p className="text-gray-600 text-xs sm:text-sm">
 									₹{Number(item.price).toFixed(2)}
 								</p>
 								<button
-									className="w-full mt-2 bg-indigo-500 text-white text-sm py-1 rounded-md hover:bg-indigo-600"
+									className="w-full mt-2 bg-indigo-500 text-white text-xs sm:text-sm py-1 rounded-md hover:bg-indigo-600"
 									onClick={() => navigate(`/products/${item.id}`)}
 								>
 									View
@@ -197,7 +202,7 @@ const ProductDetails = ({ userId }: { userId: number }) => {
 					</div>
 				</div>
 			) : (
-				<div className="mt-10 w-full">
+				<div className="mt-8 sm:mt-10 w-full">
 					<p className="text-center">No related products found.</p>
 				</div>
 			)}
