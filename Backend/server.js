@@ -9,7 +9,6 @@ const productRoutes = require("./routes/ProductsRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const wishlistRoutes = require("./routes/wishlistRoutes");
-// const categoryRoutes = require("./routes/categories");
 const pool = require("./models/db");
 const checkoutRoutes = require("./routes/checkoutRoutes");
 
@@ -17,11 +16,6 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-// app.use((req, res, next) => {
-// 	console.log(`${req.method} ${req.url} - Headers:`, req.headers);
-// 	next();
-// });
 
 app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
